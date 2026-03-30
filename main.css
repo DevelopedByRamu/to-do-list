@@ -1,0 +1,61 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: black;
+  color: white;
+}
+
+h2, h3 {
+  color: rgb(255, 255, 255);
+}
+
+input {
+  color: white;
+  background-color: #333;
+  border: 1px solid #666;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+}
+
+.column {
+  flex: 1;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 8px;
+  border-bottom: 1px solid #666;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  margin-left: 2px;
+}
+
+.done-btn {
+  background-color: green;
+  color: white;
+  border-radius: 5px;
+
+}
+
+.remove-btn {
+  background-color: red;
+  color: white;
+  border-radius: 5px;
+}
+
+#noTasks {
+  color: white;
+  font-style: italic;
+  text-align: center;
+}
