@@ -1,27 +1,30 @@
-<!DOCTYPE html>
-<html><head>
-  <link rel="stylesheet" href="main.css">
-</head><body>
-<h2>To-Do List</h2>
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <h2>To-Do List</h2>
 
-<input id="task" placeholder="New task">
-<button onclick="addTask()">Add</button>
+    <form action="add-task.html" method="post">
+      <input id="task" placeholder="New task" />
+      <button type="submit">Add</button>
+    </form>
 
-<div class="container">
-  <div class="column">
-    <h3>Pending Tasks</h3>
-    <ul id="list"></ul>
-    <p id="noTasks">You have no pending tasks</p>
-  </div>
-  <div class="column">
-    <h3>Done Activities</h3>
-    <ul id="doneList"></ul>
-  </div>
-</div>
+    <div class="container">
+      <div class="column">
+        <h3>Pending Tasks</h3>
+        <ul id="list"></ul>
+        <p id="noTasks">You have no pending tasks</p>
+      </div>
+      <div class="column">
+        <h3>Done Activities</h3>
+        <ul id="doneList"></ul>
+      </div>
+    </div>
 
-<button onclick="clearAll()">Clear All</button>
+    <button onclick="clearAll()">Clear All</button>
 
-<script src="main.js"></script>
-
-</body>
+    <script src="main.js"></script>
+  </body>
 </html>

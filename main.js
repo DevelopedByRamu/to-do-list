@@ -1,38 +1,95 @@
 // Create task arrays
 let tasks = [];
 let doneTasks = [];
+const jobs = [];
 
 // Function to Display tasks
 function displayTasks() {
   // Pending tasks
   let html = "";
-  for (let i = 0; i < tasks.length; i++) {
-    html += "<li>" + tasks[i] +
-    " <button class='done-btn' onclick='markDone(" + i + ")'>Done</button>" +
-    " <button class='remove-btn' onclick='removeTask(" + i + ")'>x</button></li>";
+  if (tasks.length === 0) {
+    document.getElementById("list").innerHTML = "";
+  } else {
+    for (let i = 0; i < tasks.length; i++) {
+      const taskItem = document.createElement("li");
+
+      const taskItemCompleteButton = document.createElement("button");
+      taskItemCompleteButton.classList.add("done-btn");
+      taskItemCompleteButton.addEventListener("click", (ev) => {
+        //markDone(i);
+        taskItem.classList.toggle("fade");
+        setTimeout(() => {
+          markDone();
+        }, 600);
+      });
+      taskItemCompleteButton.innerHTML = "done";
+
+      const taskItemRemoveButton = document.createElement("button");
+      taskItemRemoveButton.classList.add("remove-btn");
+      taskItemRemoveButton.addEventListener("click", (ev) => {
+        removeTask(i);
+      });
+      taskItemRemoveButton.innerHTML = "x";
+
+      taskItem.innerHTML = tasks[i];
+      taskItem.appendChild(taskItemCompleteButton);
+      taskItem.appendChild(taskItemRemoveButton);
+      console.log(taskItem);
+      document.getElementById("list").appendChild(taskItem);
+
+      html += `<li>${tasks[i]} <button class='done-btn' onclick='markDone(${i})'>Done</button> <button class='remove-btn' onclick='removeTask(${i})'>x</button></li>`;
+    }
+    // document.getElementById("list").innerHTML = html;
   }
-  document.getElementById("list").innerHTML = html;
 
   // Show or hide no tasks message
-  document.getElementById("noTasks").style.display = tasks.length === 0 ? "block" : "none";
+  document.getElementById("noTasks").style.display =
+    tasks.length === 0 ? "block" : "none";
 
   // Done tasks
   let doneHtml = "";
   for (let i = 0; i < doneTasks.length; i++) {
-    doneHtml += "<li>" + doneTasks[i] +
-    " <button class='remove-btn' onclick='removeDone(" + i + ")'>x</button></li>";
+    // const taskItem = new Element("li");
+
+    doneHtml +=
+      "<li>" +
+      doneTasks[i] +
+      " <button class='remove-btn' onclick='removeDone(" +
+      i +
+      ")'>x</button></li>";
   }
   document.getElementById("doneList").innerHTML = doneHtml;
 }
+
+document.querySelector("form").addEventListener("submit", (ev) => {
+  // console.log(ev);
+  ev.preventDefault();
+  addTask();
+});
 
 // Function to Add a task
 function addTask() {
   let taskInput = document.getElementById("task");
   let text = taskInput.value;
   if (text === "") {
+    alert("cannot sumit an empty taSK");
     return;
   }
   tasks.push(text);
+
+  jobs.push({
+    name: text,
+    completed: Math.round(Math.random()) > 0,
+    createAt: new Date(),
+    completeAt: null,
+  });
+
+  console.log(
+    jobs,
+    jobs.filter((job) => job.completed === true), // all the completed tasks
+    jobs.filter((job) => job.completed === false), // and the rest
+  );
+
   taskInput.value = "";
   saveTasks();
   displayTasks();
