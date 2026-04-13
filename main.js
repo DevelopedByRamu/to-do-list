@@ -6,40 +6,37 @@ const jobs = [];
 // Function to Display tasks
 function displayTasks() {
   // Pending tasks
-  let html = "";
-  if (tasks.length === 0) {
-    document.getElementById("list").innerHTML = "";
-  } else {
+  const listElement = document.getElementById("list");
+  listElement.innerHTML = "";
+  if (tasks.length !== 0) {
     for (let i = 0; i < tasks.length; i++) {
       const taskItem = document.createElement("li");
 
-      const taskItemCompleteButton = document.createElement("button");
-      taskItemCompleteButton.classList.add("done-btn");
-      taskItemCompleteButton.addEventListener("click", (ev) => {
-        //markDone(i);
-        taskItem.classList.toggle("fade");
+      const taskItemCheckbox = document.createElement("input");
+      taskItemCheckbox.type = "checkbox";
+      taskItemCheckbox.classList.add("done-checkbox");
+      taskItemCheckbox.addEventListener("change", () => {
+        taskItem.classList.add("fade");
         setTimeout(() => {
-          markDone();
+          markDone(i);
         }, 600);
       });
-      taskItemCompleteButton.innerHTML = "done";
+
+      const taskText = document.createElement("span");
+      taskText.textContent = tasks[i];
 
       const taskItemRemoveButton = document.createElement("button");
       taskItemRemoveButton.classList.add("remove-btn");
-      taskItemRemoveButton.addEventListener("click", (ev) => {
+      taskItemRemoveButton.addEventListener("click", () => {
         removeTask(i);
       });
-      taskItemRemoveButton.innerHTML = "x";
+      taskItemRemoveButton.textContent = "x";
 
-      taskItem.innerHTML = tasks[i];
-      taskItem.appendChild(taskItemCompleteButton);
+      taskItem.appendChild(taskItemCheckbox);
+      taskItem.appendChild(taskText);
       taskItem.appendChild(taskItemRemoveButton);
-      console.log(taskItem);
-      document.getElementById("list").appendChild(taskItem);
-
-      html += `<li>${tasks[i]} <button class='done-btn' onclick='markDone(${i})'>Done</button> <button class='remove-btn' onclick='removeTask(${i})'>x</button></li>`;
+      listElement.appendChild(taskItem);
     }
-    // document.getElementById("list").innerHTML = html;
   }
 
   // Show or hide no tasks message
@@ -47,18 +44,38 @@ function displayTasks() {
     tasks.length === 0 ? "block" : "none";
 
   // Done tasks
-  let doneHtml = "";
-  for (let i = 0; i < doneTasks.length; i++) {
-    // const taskItem = new Element("li");
+  const doneListElement = document.getElementById("doneList");
+  doneListElement.innerHTML = "";
+  if (doneTasks.length !== 0) {
+    for (let i = 0; i < doneTasks.length; i++) {
+      const doneItem = document.createElement("li");
 
-    doneHtml +=
-      "<li>" +
-      doneTasks[i] +
-      " <button class='remove-btn' onclick='removeDone(" +
-      i +
-      ")'>x</button></li>";
+      const doneText = document.createElement("span");
+      doneText.textContent = doneTasks[i];
+
+      const returnButton = document.createElement("button");
+      returnButton.classList.add("return-btn");
+      returnButton.textContent = "↩";
+      returnButton.addEventListener("click", () => {
+        doneItem.classList.add("fade");
+        setTimeout(() => {
+          returnToPending(i);
+        }, 600);
+      });
+
+      const removeButton = document.createElement("button");
+      removeButton.classList.add("remove-btn");
+      removeButton.textContent = "x";
+      removeButton.addEventListener("click", () => {
+        removeDone(i);
+      });
+
+      doneItem.appendChild(doneText);
+      doneItem.appendChild(returnButton);
+      doneItem.appendChild(removeButton);
+      doneListElement.appendChild(doneItem);
+    }
   }
-  document.getElementById("doneList").innerHTML = doneHtml;
 }
 
 document.querySelector("form").addEventListener("submit", (ev) => {
@@ -113,6 +130,14 @@ function markDone(i) {
 // Function to Remove a done task
 function removeDone(i) {
   doneTasks.splice(i, 1);
+  saveTasks();
+  displayTasks();
+}
+
+// Function to Return a done task to pending
+function returnToPending(i) {
+  const task = doneTasks.splice(i, 1)[0];
+  tasks.push(task);
   saveTasks();
   displayTasks();
 }

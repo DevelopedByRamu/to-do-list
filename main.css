@@ -1,13 +1,13 @@
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
-  background-color: black;
-  color: white;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
 }
 
 h2,
 h3 {
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
 }
 
 input {
@@ -24,6 +24,11 @@ input {
 
 .column {
   flex: 1;
+  padding: 0 20px;
+}
+
+.column:first-child {
+  border-right: 1px solid #666;
 }
 
 ul {
@@ -32,11 +37,22 @@ ul {
 }
 
 li {
-  padding: 8px;
-  border-bottom: 1px solid #666;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  background-color: #dd9ffa;
+  border: 1px solid #444;
+  border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 10px;
+}
+
+.done-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  accent-color: limegreen;
 }
 
 li.fade {
@@ -51,6 +67,12 @@ button {
 
 .done-btn {
   background-color: green;
+  color: white;
+  border-radius: 5px;
+}
+
+.return-btn {
+  background-color: rgb(57, 143, 255);
   color: white;
   border-radius: 5px;
 }
